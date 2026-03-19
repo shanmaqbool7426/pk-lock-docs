@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PKLocker - Smart EMI Device Control System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --bg-card: rgba(30, 41, 59, 0.7);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #3b82f6;
+            --secondary: #8b5cf6;
+            --accent: #10b981;
+            --warning: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.15) 0%, transparent 50%);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 8rem 0 4rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin: 0 auto 3rem;
+        }
+
+        .tagline {
+            display: inline-block;
+            background: linear-gradient(90deg, rgba(59,130,246,0.2) 0%, rgba(139,92,246,0.2) 100%);
+            padding: 0.5rem 1.5rem;
+            border-radius: 999px;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.875rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 1.125rem;
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.5);
+            margin-top: 1rem;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.6);
+        }
+
+        /* Value Proposition */
+        .value-prop {
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .value-prop h2 {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-card h3 {
+            font-size: 1.25rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        /* Visuals Section */
+        .visuals {
+            display: flex;
+            gap: 3rem;
+            margin: 6rem 0;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .mockup-container {
+            position: relative;
+            perspective: 1000px;
+        }
+
+        .mockup-dashboard {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform: rotateY(-5deg) rotateX(5deg);
+            transition: transform 0.5s ease;
+        }
+
+        .mockup-mobile {
+            width: 100%;
+            max-width: 250px;
+            border-radius: 30px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 4px solid #334155;
+            position: absolute;
+            bottom: -20px;
+            right: -40px;
+            transform: rotateY(-15deg) translateZ(50px);
+            transition: transform 0.5s ease;
+        }
+
+        .mockup-container:hover .mockup-dashboard {
+            transform: rotateY(0) rotateX(0);
+        }
+
+        .mockup-container:hover .mockup-mobile {
+            transform: rotateY(0) translateZ(50px) translateY(-10px);
+        }
+
+        @media (max-width: 900px) {
+            .mockup-mobile {
+                position: relative;
+                bottom: 0;
+                right: 0;
+                margin-top: -80px;
+                transform: none;
+            }
+            .mockup-dashboard {
+                transform: none;
+            }
+            .visuals {
+                flex-direction: column;
+            }
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 0;
+        }
+
+        .features-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .features-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .features-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+            padding: 3rem;
+            border-radius: 24px;
+            transition: all 0.4s ease;
+            
+            /* Animation base */
+            opacity: 0;
+            transform: translateY(40px);
+            animation: fadeUp 0.6s ease forwards;
+        }
+
+        .feature-card:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        /* Better hover effect */
+        .feature-card:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7);
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        @media (max-width: 768px) {
+            .feature-card {
+                flex-direction: column !important;
+                text-align: center;
+                padding: 2rem;
+            }
+            .feature-list li {
+                justify-content: center;
+                text-align: left;
+            }
+            .feature-result {
+                justify-content: center;
+            }
+        }
+
+        .feature-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            padding: 1px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-mask: 
+                linear-gradient(#000 0 0) content-box, 
+                linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0.2;
+            pointer-events: none;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            background: linear-gradient(135deg, #3b82f6, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .feature-card:nth-child(1) { animation-delay: 0.1s; }
+        .feature-card:nth-child(2) { animation-delay: 0.2s; }
+        .feature-card:nth-child(3) { animation-delay: 0.3s; }
+        .feature-card:nth-child(4) { animation-delay: 0.4s; }
+        .feature-card:nth-child(5) { animation-delay: 0.5s; }
+        .feature-card:nth-child(6) { animation-delay: 0.6s; }
+        .feature-card:nth-child(7) { animation-delay: 0.7s; }
+        .feature-card:nth-child(8) { animation-delay: 0.8s; }
+        .feature-card:nth-child(9) { animation-delay: 0.9s; }
+        .feature-card:nth-child(10) { animation-delay: 1.0s; }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-desc {
+            margin-bottom: 1rem;
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .feature-list {
+            list-style-type: none;
+            margin-left: 0;
+            padding-left: 0;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .feature-list li {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .check-icon {
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.25rem;
+            line-height: 1;
+        }
+
+        .feature-result {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-weight: 600;
+            color: var(--accent);
+            font-size: 1.125rem;
+        }
+
+        .feature-image-wrapper {
+            margin-top: 1.5rem;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .feature-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .feature-card:hover .feature-image {
+            transform: scale(1.05);
+        }
+
+        /* Differentiation Section */
+        .differentiation {
+            padding: 6rem 0;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0) 0%, rgba(30, 41, 59, 0.5) 50%, rgba(15, 23, 42, 0) 100%);
+        }
+
+        .diff-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4rem;
+        }
+
+        .diff-text {
+            flex: 1;
+        }
+
+        .diff-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .diff-list {
+            list-style: none;
+        }
+
+        .diff-list li {
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.125rem;
+        }
+
+        .diff-list li::before {
+            content: '✓';
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            background: var(--accent);
+            color: var(--bg-dark);
+            border-radius: 50%;
+            font-weight: bold;
+        }
+
+        .diff-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .glow-box {
+            position: relative;
+            display: inline-block;
+        }
+
+        .glow-box::after {
+            content: '';
+            position: absolute;
+            inset: -20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            filter: blur(40px);
+            opacity: 0.3;
+            z-index: -1;
+            border-radius: 50%;
+        }
+
+        /* Footer CTA */
+        .footer-cta {
+            padding: 8rem 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .footer-cta::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+            z-index: -1;
+        }
+
+        .footer-cta h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-cta p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .diff-container {
+                flex-direction: column;
+            }
+            .footer-cta h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <span class="tagline">The Ultimate EMI Securtiy</span>
+            <h1>PKLocker<br><span>Smart EMI Device Control</span></h1>
+            <p>The advanced mobile device management solution designed specifically for shopkeepers and mobile dealers who sell smartphones on installment. Ensure secure payments and reduce financial risk.</p>
+            <a href="#features" class="cta-button">Explore Features</a>
+        </section>
+
+        <!-- Visuals/Mockup Section -->
+        <section class="visuals">
+            <div class="mockup-container glow-box">
+                <!-- Replace these paths with local absolute paths from user's system -->
+                <img src="file:///C:/Users/Shan%20Maqbool/.gemini/antigravity/brain/2f7cad16-51e5-4370-8301-60403cc121f5/dashboard_mockup_1773923788649.png" alt="PKLocker Dashboard" class="mockup-dashboard">
+                <img src="file:///C:/Users/Shan%20Maqbool/.gemini/antigravity/brain/2f7cad16-51e5-4370-8301-60403cc121f5/mobile_lock_screen_1773923805221.png" alt="PKLocker Mobile Lock Screen" class="mockup-mobile">
+            </div>
+        </section>
+
+        <!-- Value Proposition -->
+        <section class="value-prop">
+            <h2>Complete Control, Zero Effort</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Secure Installment Sales</h3>
+                    <p>Protect your capital and guarantee returns on every EMI mobile sold.</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Automated Compliance</h3>
+                    <p>Enforce payments without manual follow-ups or awkward phone calls.</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Real-time Tracking</h3>
+                    <p>Know exactly where your financed devices are at all times.</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Fraud Prevention</h3>
+                    <p>Stop theft, unauthorized use, and runaway cases instantly.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Grid -->
+        <section id="features" class="features">
+            <div class="features-header">
+                <h2>Powerful Tools for Your Business</h2>
+                <p style="color: var(--text-muted);">Everything you need to manage your EMI portfolio securely.</p>
+            </div>
+            
+            <div class="features-grid">
+                <!-- Feature 1 -->
+                <div class="feature-card">
+                    <div style="flex: 1; min-width: 300px;">
+                        <div class="feature-icon">⏱️</div>
+                        <h3>1. Automated EMI Tracking & Auto-Lock System</h3>
+                        <p class="feature-desc">PKLocker continuously monitors all customer EMI schedules in the background.</p>
+                        <ul class="feature-list">
+                            <li><span class="check-icon">✓</span> <span><strong>Automatically tracks</strong> upcoming and passed due dates for every customer.</span></li>
+                            <li><span class="check-icon">✓</span> <span><strong>Sends timely reminders</strong> via WhatsApp and SMS before and on the due date.</span></li>
+                            <li><span class="check-icon">✓</span> <span><strong>Missed Payment Action:</strong> If payment is missed, the device gets restricted or locked automatically without manual intervention.</span></li>
+                        </ul>
+                        <div class="feature-result">
+                            <span>👉</span> Result: <strong>Zero manual follow-up needed</strong>
+                        </div>
+                    </div>
+                    <div style="flex: 1; min-width: 300px;" class="feature-image-wrapper">
+                        <img src="file:///C:/Users/Shan%20Maqbool/.gemini/antigravity/brain/92803acf-f19c-41fb-beab-aaafd754b2df/auto_emi_dashboard_1773926845000.png" alt="Auto EMI Tracking System" class="feature-image">
+                    </div>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-card">
+                    <div style="flex: 1; min-width: 300px;">
+                        <div class="feature-icon">💬</div>
+                        <h3>2. Smart Reminder System</h3>
+                        <p class="feature-desc">Keeps customers informed before due dates with automated messaging.</p>
+                        <ul class="feature-list">
+                            <li><span class="check-icon">✓</span> <span><strong>Pre-DueDate Alerts:</strong> Gentle reminders sent through WhatsApp and SMS.</span></li>
+                            <li><span class="check-icon">✓</span> <span><strong>Due Date Notifications:</strong> Firm reminders exactly on the day of payment.</span></li>
+                            <li><span class="check-icon">✓</span> <span><strong>Post-DueDate Warnings:</strong> Escalating warnings after missed payments.</span></li>
+                        </ul>
+                        <div class="feature-result">
+                            <span>👉</span> Result: <strong>Higher recovery rate with less effort</strong>
+                        </div>
+                    </div>
+                    <div style="flex: 1; min-width: 300px;" class="feature-image-wrapper">
+                        <img src="file:///C:/Users/Shan%20Maqbool/.gemini/antigravity/brain/92803acf-f19c-41fb-beab-aaafd754b2df/smart_reminders_ui_1773926873007.png" alt="Smart Reminder System" class="feature-image">
+                    </div>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-card">
+                    <div style="flex: 1; min-width: 300px;">
+                        <div class="feature-icon">🔒</div>
+                        <h3>3. Phased Restriction System</h3>
+                        <p class="feature-desc">Instead of immediate lock, PKLocker uses a smart psychological escalation approach.</p>
+                        <ul class="feature-list">
+                            <li><span class="check-icon">✓</span> <span><strong>Day 1 & 2:</strong> Non-intrusive warning wallpapers and periodic alert sounds.</span></li>
+                            <li><span class="check-icon">✓</span> <span><strong>Day 3:</strong> App blocking for popular apps like WhatsApp, YouTube, and Facebook.</span></li>
+                            <li><span class="check-icon">✓</span> <span><strong>Day 5+:</strong> Full strict device lock until payment is made.</span></li>
+                        </ul>
+                        <div class="feature-result">
+                            <span>👉</span> Result: <strong>Customer pressure without losing relationship</strong>
+                        </div>
+                    </div>
+                    <div style="flex: 1; min-width: 300px;" class="feature-image-wrapper">
+                        <img src="file:///C:/Users/Shan%20Maqbool/.gemini/antigravity/brain/2f7cad16-51e5-4370-8301-60403cc121f5/mobile_lock_screen_1773923805221.png" alt="Phased Restriction System" class="feature-image">
+                    </div>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="feature-card">
+                    <div style="flex: 1; min-width: 300px;">
+                        <div class="feature-icon">📱</div>
+                        <h3>4. Complete App Control System</h3>
+                        <p class="feature-desc">Shopkeepers can control mobile usage remotely, offering full peace of mind.</p>
+                        <ul class="feature-list">
+                            <li><span class="check-icon">✓</span> <span><strong>Social Media Blocking:</strong> Restrict apps (WhatsApp, YouTube, TikTok, etc.) on demand.</span></li>
+                            <li><span class="check-icon">✓</span> <span><strong>Feature Restrictions:</strong> Disable USB ports, camera, and force soft resets.</span></li>
+                            <li><span class="check-icon">✓</span> <span><strong>Absolute Authority:</strong> Fully lock or unlock the device anytime over-the-air.</span></li>
+                        </ul>
+                        <div class="feature-result">
+                            <span>👉</span> Result: <strong>Full authority over the sold device</strong>
+                        </div>
+                    </div>
+                    <div style="flex: 1; min-width: 300px;" class="feature-image-wrapper">
+                        <img src="file:///C:/Users/Shan%20Maqbool/.gemini/antigravity/brain/2f7cad16-51e5-4370-8301-60403cc121f5/device_controls_mockup_1773925789291.png" alt="Complete App Control System" class="feature-image">
+                    </div>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="feature-card">
+                    <div style="flex: 1; min-width: 300px;">
+                        <div class="feature-icon">📶</div>
+                        <h3>5. Offline Lock/Unlock</h3>
+                        <p class="feature-desc">Even without internet, total control over the mobile remains fully active.</p>
+                        <ul class="feature-list">
+                            <li><span class="check-icon">✓</span> <span><strong>SMS Triggers:</strong> Completely lock or unlock devices directly via encrypted SMS code.</span></li>
+                            <li><span class="check-icon">✓</span> <span><strong>No Connection Needed:</strong> Device executes commands in rural areas with no data connection.</span></li>
+                            <li><span class="check-icon">✓</span> <span><strong>Deregistration:</strong> Safe device dis-enrollment offline.</span></li>
+                        </ul>
+                        <div class="feature-result">
+                            <span>👉</span> Result: <strong>Works in all conditions (Unique Feature)</strong>
+                        </div>
+                    </div>
+                    <div style="flex: 1; min-width: 300px;" class="feature-image-wrapper">
+                        <img src="file:///C:/Users/Shan%20Maqbool/.gemini/antigravity/brain/2f7cad16-51e5-4370-8301-60403cc121f5/customer_control_mockup_1773925772658.png" alt="Offline Lock/Unlock" class="feature-image">
+                    </div>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="feature-card">
+                    <div style="flex: 1; min-width: 300px;">
+                        <div class="feature-icon">🎨</div>
+                        <h3>6. Custom Lock Screen Branding</h3>
+                        <p class="feature-desc">When a phone is locked, it presents a professional and customized facade.</p>
+                        <ul class="feature-list">
+                            <li><span class="check-icon">✓</span> <span><strong>Shop Identity:</strong> Boldly displays your Shop Name on the lock interface.</span></li>
+                            <li><span class="check-icon">✓</span> <span><strong>Contact Channels:</strong> Presents immediate contact numbers for dispute resolution.</span></li>
+                            <li><span class="check-icon">✓</span> <span><strong>Account Balance:</strong> Directly states the precise pending EMI amount explicitly.</span></li>
+                        </ul>
+                        <div class="feature-result">
+                            <span>👉</span> Result: <strong>Direct communication + strong recovery pressure</strong>
+                        </div>
+                    </div>
+                    <div style="flex: 1; min-width: 300px;" class="feature-image-wrapper">
+                        <img src="file:///C:/Users/Shan%20Maqbool/.gemini/antigravity/brain/2f7cad16-51e5-4370-8301-60403cc121f5/dashboard_mockup_1773923788649.png" alt="Custom Lock Screen Branding" class="feature-image">
+                    </div>
+                </div>
+
+                <!-- Feature 7 -->
+                <div class="feature-card">
+                    <div style="flex: 1; min-width: 300px;">
+                        <div class="feature-icon">📍</div>
+                        <h3>7. Live Location Tracking & Geo-Fencing</h3>
+                        <p class="feature-desc">Keep unparalleled oversight of your device inventory's geographical movements.</p>
+                        <ul class="feature-list">
+                            <li><span class="check-icon">✓</span> <span><strong>Constant Polling:</strong> Location updates injected to the dashboard every 30 minutes.</span></li>
+                            <li><span class="check-icon">✓</span> <span><strong>Geo-Fencing:</strong> Instant alerts if a device breaches city limits.</span></li>
+                            <li><span class="check-icon">✓</span> <span><strong>Path History:</strong> Monitor historic movement timelines of heavily delayed clients.</span></li>
+                        </ul>
+                        <div class="feature-result">
+                            <span>👉</span> Result: <strong>Prevents theft and runaway cases</strong>
+                        </div>
+                    </div>
+                    <div style="flex: 1; min-width: 300px;" class="feature-image-wrapper">
+                        <img src="file:///C:/Users/Shan%20Maqbool/.gemini/antigravity/brain/92803acf-f19c-41fb-beab-aaafd754b2df/geo_tracking_ui_1773926889141.png" alt="Live Location Tracking & Geo-Fencing" class="feature-image">
+                    </div>
+                </div>
+
+                <!-- Feature 8 -->
+                <div class="feature-card">
+                    <div style="flex: 1; min-width: 300px;">
+                        <div class="feature-icon">📵</div>
+                        <h3>8. SIM Change Detection (Anti-Theft)</h3>
+                        <p class="feature-desc">Rigorous SIM card anti-tampering logic explicitly tailored for phone recovery.</p>
+                        <ul class="feature-list">
+                            <li><span class="check-icon">✓</span> <span><strong>Instant Checks:</strong> System identifies unexpected SIM replacements in real-time.</span></li>
+                            <li><span class="check-icon">✓</span> <span><strong>Merchant Alerts:</strong> Shopkeeper receives direct automated notification of the infraction.</span></li>
+                            <li><span class="check-icon">✓</span> <span><strong>Defense Protocol:</strong> Device can proactively self-lock immediately to mitigate theft.</span></li>
+                        </ul>
+                        <div class="feature-result">
+                            <span>👉</span> Result: <strong>No escape from tracking</strong>
+                        </div>
+                    </div>
+                    <div style="flex: 1; min-width: 300px;" class="feature-image-wrapper">
+                        <img src="file:///C:/Users/Shan%20Maqbool/.gemini/antigravity/brain/2f7cad16-51e5-4370-8301-60403cc121f5/key_dashboard_mockup_1773925753241.png" alt="SIM Change Detection (Anti-Theft)" class="feature-image">
+                    </div>
+                </div>
+
+                <!-- Feature 9 -->
+                <div class="feature-card">
+                    <div style="flex: 1; min-width: 300px;">
+                        <div class="feature-icon">🗓️</div>
+                        <h3>9. Flexible EMI Rescheduling</h3>
+                        <p class="feature-desc">Intelligently restructure payment constraints to support genuine customers in hardship.</p>
+                        <ul class="feature-list">
+                            <li><span class="check-icon">✓</span> <span><strong>Amount Modifications:</strong> Dynamically change required EMI amounts on-the-fly.</span></li>
+                            <li><span class="check-icon">✓</span> <span><strong>Term Extension:</strong> Elongate duration logic to lower monthly burdens.</span></li>
+                            <li><span class="check-icon">✓</span> <span><strong>Custom Plans:</strong> Draft completely adjusted payment plans mid-lease.</span></li>
+                        </ul>
+                        <div class="feature-result">
+                            <span>👉</span> Result: <strong>Customer retention + better recovery</strong>
+                        </div>
+                    </div>
+                    <div style="flex: 1; min-width: 300px;" class="feature-image-wrapper">
+                        <img src="file:///C:/Users/Shan%20Maqbool/.gemini/antigravity/brain/2f7cad16-51e5-4370-8301-60403cc121f5/dashboard_mockup_1773923788649.png" alt="Flexible EMI Rescheduling" class="feature-image">
+                    </div>
+                </div>
+
+                <!-- Feature 10 -->
+                <div class="feature-card">
+                    <div style="flex: 1; min-width: 300px;">
+                        <div class="feature-icon">📊</div>
+                        <h3>10. Smart Business Dashboard</h3>
+                        <p class="feature-desc">A centralized nexus offering high-level visibility to scale business operations.</p>
+                        <ul class="feature-list">
+                            <li><span class="check-icon">✓</span> <span><strong>Macro Financials:</strong> Instant calculation of total collections and outstanding capital.</span></li>
+                            <li><span class="check-icon">✓</span> <span><strong>Asset State:</strong> Visual representation of active versus strictly locked devices.</span></li>
+                            <li><span class="check-icon">✓</span> <span><strong>Risk Profiling:</strong> Automatically surfaces consistently risky customers causing delays.</span></li>
+                        </ul>
+                        <div class="feature-result">
+                            <span>👉</span> Result: <strong>Better decision-making & business growth</strong>
+                        </div>
+                    </div>
+                    <div style="flex: 1; min-width: 300px;" class="feature-image-wrapper">
+                        <img src="file:///C:/Users/Shan%20Maqbool/.gemini/antigravity/brain/2f7cad16-51e5-4370-8301-60403cc121f5/key_dashboard_mockup_1773925753241.png" alt="Smart Business Dashboard" class="feature-image">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- App Previews -->
+        <section class="app-previews" style="padding: 4rem 0;">
+            <div class="features-header">
+                <h2>Experience the Interface</h2>
+                <p style="color: var(--text-muted);">A glimpse into the powerful dashboard and intuitive mobile control panels.</p>
+            </div>
+            <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; align-items: stretch;">
+                <img src="file:///C:/Users/Shan%20Maqbool/.gemini/antigravity/brain/2f7cad16-51e5-4370-8301-60403cc121f5/key_dashboard_mockup_1773925753241.png" alt="Admin Dashboard Mockup" style="border-radius: 20px; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); width: 100%; max-width: 400px; object-fit: cover; transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-10px)'" onmouseout="this.style.transform='none'">
+                <img src="file:///C:/Users/Shan%20Maqbool/.gemini/antigravity/brain/2f7cad16-51e5-4370-8301-60403cc121f5/customer_control_mockup_1773925772658.png" alt="Customer Control Mockup" style="border-radius: 20px; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); width: 100%; max-width: 300px; object-fit: cover; transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-10px)'" onmouseout="this.style.transform='none'">
+                <img src="file:///C:/Users/Shan%20Maqbool/.gemini/antigravity/brain/2f7cad16-51e5-4370-8301-60403cc121f5/device_controls_mockup_1773925789291.png" alt="Device Controls Mockup" style="border-radius: 20px; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); width: 100%; max-width: 300px; object-fit: cover; transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-10px)'" onmouseout="this.style.transform='none'">
+            </div>
+        </section>
+        <!-- Why PKLocker -->
+        <section class="differentiation">
+            <div class="diff-container container">
+                <div class="diff-text">
+                    <h2>Why PKLocker is Different</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 1.125rem;">It is not just a locking system — it's a complete EMI business management solution.</p>
+                    <ul class="diff-list">
+                        <li>Works perfectly online and offline</li>
+                        <li>Provides real-time, instant control</li>
+                        <li>Built specifically for the EMI mobile business</li>
+                        <li>Unbeatable combination of security, automation, and analytics</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer / CTA -->
+        <section class="footer-cta">
+            <h2>Sell more phones on EMI — without the risk.</h2>
+            <p>Recover payments faster, reduce your losses, and expand your installment business with absolute confidence.</p>
+            <a href="#" class="cta-button" style="background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);">Get PKLocker Today</a>
+        </section>
+    </div>
+
+</body>
+</html>
